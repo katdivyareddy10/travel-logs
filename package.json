@@ -1,0 +1,31 @@
+{
+  "name": "travel-log-cj",
+  "version": "1.0.0",
+  "description": "MERN stack application for travel log",
+  "main": "index.js",
+  "scripts": {
+    "start": "ndeo src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint": "eslint src/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Divya Katpally",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "mongoose": "^5.9.23",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.7",
+    "nodemon": "^2.0.4"
+  }
+}
