@@ -15,7 +15,28 @@ code {
 .marker {
   transform: translate(-50%, -100%);
 }
-
+.error {
+  color: red;
+}
 .popup {
-  width: 300px;
+  max-width: 30vw;
+}
+.popup img {
+  width: auto;
+  display: block;
+  text-align: center;
+  height: 200px;
+  margin: 0 auto;
+}
+.entryform {
+  padding: 0.5rem;
+}
+
+.entryform label,
+.entryform input,
+.entryform textarea,
+.entryform button {
+  margin: 0.5rem 0;
+  display: block;
+  width: 100%;
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
-
+import LogEntryForm from "./LogEntryForm";
 import { listLogEntries } from "./Api";
 
 const App = () => {
@@ -15,13 +15,15 @@ const App = () => {
     pitch: 0,
   });
 
+  const getEntries = async () => {
+    const logEntries = await listLogEntries();
+    setLogEntries(logEntries);
+    console.log(logEntries);
+  };
+
   useEffect(() => {
     //IFFE - immediately invoked function expression to support async calls in useEffect()
-    (async () => {
-      const logEntries = await listLogEntries();
-      setLogEntries(logEntries);
-      console.log(logEntries);
-    })();
+    getEntries();
   }, []);
 
   const showAddMarkerPopup = (event) => {
@@ -44,12 +46,8 @@ const App = () => {
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
     >
       {logEntries.map((entry) => (
-        <>
-          <Marker
-            key={entry._id}
-            latitude={entry.latitude}
-            longitude={entry.longitude}
-          >
+        <React.Fragment key={entry._id}>
+          <Marker latitude={entry.latitude} longitude={entry.longitude}>
             <div onClick={() => setShowPopup({ [entry._id]: true })}>
               <img
                 className="marker"
@@ -78,10 +76,11 @@ const App = () => {
                 <small>
                   Visited on {new Date(entry.visitDate).toLocaleDateString()}
                 </small>
+                {entry.image && <img src={entry.image} alt={entry.title} />}
               </div>
             </Popup>
           ) : null}
-        </>
+        </React.Fragment>
       ))}
 
       {addEntryLocation ? (
@@ -103,6 +102,7 @@ const App = () => {
             </div>
           </Marker>
           <Popup
+            className="popup"
             latitude={addEntryLocation.latitude}
             longitude={addEntryLocation.longitude}
             closeButton={true}
@@ -111,7 +111,15 @@ const App = () => {
             onClose={() => setShowPopup({})}
             anchor="top"
           >
-            <div className="popup">Add your new log entry here!</div>
+            <div className="popup">
+              <LogEntryForm
+                onClose={() => {
+                  setAddEntryLocation(null);
+                  getEntries();
+                }}
+                location={addEntryLocation}
+              />
+            </div>
           </Popup>
         </>
       ) : null}
